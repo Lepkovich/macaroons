@@ -1,0 +1,72 @@
+.advantage:hover .advantage-num {
+  background-color: #eba8b1;
+}
+.advantage:hover .advantage-num span {
+  color: rgb(130, 19, 40);
+}
+.advantage-num {
+  border-radius: 50%;
+  background-color: rgb(130, 19, 40);
+  margin-top: 88px;
+  width: 70px;
+  height: 70px;
+  position: relative;
+  transition: all .3s ease;
+}
+
+.advantage-num span {
+  font-size: 60px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  position: absolute;
+  left: 21px;
+  bottom: -16px;
+  transition: all .3s ease;
+}
+.advantage-title{
+  font-size: 20px;
+  color: rgb(51, 25, 7);
+  text-align: left;
+  font-weight: bold;
+  padding-top: 14px;
+
+}
+.advantage-text {
+  font-size: 15px;
+  font-family: 'Gilroy-Medium', sans-serif;
+  color: rgb(51, 25, 7);
+  line-height: 1.333;
+  text-align: left;
+  width: 219px;
+  padding-top: 20px;
+}
+
+/*769 - 1024*/
+@media screen and (max-width: 1024px ){
+
+  .advantage {
+    justify-self: center;
+    margin-top: 88px;
+  }
+  .advantage .advantage-num {
+    margin: 0 auto;
+  }
+  .advantage-title,
+  .advantage-text {
+    text-align: center;
+  }
+}
+/*320 - 375*/
+@media screen and (max-width: 375px ){
+
+  .advantage {
+    margin-top: 36px;
+  }
+  .advantage-title {
+    font-size: 18px;
+  }
+  .advantage-text {
+    width: 165px;
+    font-size: 13px;
+  }
+}

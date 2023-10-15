@@ -1,12 +1,26 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AdvantagesType, ProductType} from "./types/product.type";
+import {ProductService} from "./services/product.service";
+import {CartService} from "./services/cart.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [ProductService] //подключили провайдер на уровне компонента
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
+  public products: ProductType[] = [];
+
+  constructor (private productService: ProductService,
+               public cartService: CartService ) { //инжектировали сервисы в компонент
+  }
+
+  ngOnInit() {
+    this.products = this.productService.getProducts() //отдали продукты из сервиса
+  }
+
   public advantages: AdvantagesType[] = [
     {
       title: 'Лучшие продукты',
@@ -26,28 +40,6 @@ export class AppComponent {
     }
   ];
 
-  public products: ProductType[] = [
-    {
-      image: 'macaroon-1.png',
-      title: 'Макарун с малиной',
-      price: '1,70'
-    },
-    {
-      image: 'macaroon-2.png',
-      title: 'Макарун с манго',
-      price: '1,70'
-    },
-    {
-      image: 'macaroon-3.png',
-      title: 'Пирог с ванилью',
-      price: '1,70'
-    },
-    {
-      image: 'macaroon-4.png',
-      title: 'Пирог с фисташками',
-      price: '1,70'
-    }
-  ];
 
   public formValues = {
     productTitle: '',
@@ -59,11 +51,14 @@ export class AppComponent {
   }
 
   public addToCart(product: ProductType, target: HTMLElement): void {
-    this.scrollTo(target);
-    this.formValues.productTitle = product.title.toUpperCase();
+    // this.scrollTo(target);
+    // this.formValues.productTitle = product.title.toUpperCase();
+    alert(product.title + ' добавлен в корзину');
+    this.cartService.count++;
+    this.cartService.total = this.cartService.total + product.price;
   }
 
-  public phoneNumber = "+375 (29) 368-98-68";
+  public phoneNumber = "375293689868";
   public instaLink = 'https://www.instagram.com/';
-  public showPresent = false;
+  public showCart = true;
 }

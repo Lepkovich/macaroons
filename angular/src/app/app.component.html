@@ -34,7 +34,7 @@
         </li>
       </ul>
     </nav>
-    <div class="phone"><a href="tel:{{phoneNumber}}">{{phoneNumber}}</a></div>
+    <div class="phone"><a href="tel:{{phoneNumber}}">{{phoneNumber | phoneFormat}}</a></div>
     <div class="burger" id="burger">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@
     <p class="main-info">Побалуйте себя и своих близких самыми вкусными и ароматными домашними пироженками
       Macaroon!</p>
     <a>
-      <button class="button" (click)="scrollTo(catalogElement)">Выбрать макарун</button>
+      <button class="button" coolButton (click)="scrollTo(catalogElement)">Выбрать макарун</button>
     </a>
     <div class="main-image">
       <img src="assets/images/macaroons-box.png" alt="Коробка с макарунами">
@@ -67,28 +67,16 @@
       ароматизаторов, красителей. Используем в приготовлении сливочное масло 82,5%, без дрожжей, маргарина,
       разрыхлителей и улучшителей муки.</p>
     <div class="adv-image"><img src="assets/images/macaroon-adv.png" alt="Макарун"></div>
-    <div class="advantage" *ngFor="let advantage of advantages; let i = index">
-      <div class="advantage-num"><span>{{i+1}}</span></div>
-      <div class="advantage-title">{{advantage.title}}</div>
-      <div class="advantage-text">{{advantage.text}}</div>
-    </div>
+      <advantage  *ngFor="let advantage of advantages; let i = index" [advantage]="advantage" [i]="i"></advantage>
   </div>
 </section>
 <section class="catalog" id="catalog">
   <div class="container">
     <h2>Выберите свой макарун</h2>
     <div class="catalog-items" #catalogElement>
-      <div class="catalog-item" *ngFor="let product of products; let i = index">
-        <div class="catalog-item-img"><img src="assets/images/{{product.image}}" alt="Макарун {{i+1}}"></div>
-        <h3>{{product.title}}</h3>
-        <div class="catalog-items-action">
-          <div class="catalog-items-info">
-            <div>1шт.</div>
-            <div>{{product.price}} руб.</div>
-          </div>
-          <button class="button" (click)="addToCart(product, formElement) ">Заказать</button>
-        </div>
-      </div>
+
+      <product *ngFor="let product of products; let i = index" [product]="product" [i]="i" (addToCartEvent)="addToCart($event, formElement)"></product>
+
     </div>
   </div>
 </section>
@@ -103,12 +91,14 @@
       <p>Выберите понравившийся макарун, заполните форму и ожидайте звонка нашего пекаря!</p>
       <form action="" method="get" class="order-info-form" #formElement>
         <label for="macaroon" class="order-info-form-label-choose">Ваш выбор</label>
-        <input type="text" name="macaroon" id="macaroon" placeholder="Напишите, что хотите заказать..." [(ngModel)]="formValues.productTitle">
+        <input type="text" name="macaroon" id="macaroon" placeholder="Напишите, что хотите заказать..."
+               [(ngModel)]="formValues.productTitle">
         <label for="name" class="order-info-form-label-data">Заполните данные для заказа: </label>
-        <input class="order-info-form-input-name" type="text" name="name" id="name" placeholder="Ваше имя" required [(ngModel)]="formValues.name" >
+        <input class="order-info-form-input-name" type="text" name="name" id="name" placeholder="Ваше имя" required
+               [(ngModel)]="formValues.name">
         <input class="order-info-form-input-tel" type="tel" name="phone" id="phone"
                placeholder="+375 (__) ___ - __ - __" required [(ngModel)]="formValues.phone">
-        <input class="button" type="submit" value="Оформить заказ">
+        <input class="button" coolButton type="submit" value="Оформить заказ">
       </form>
       <div class="strawberry-2"><img src="assets/images/strawberry-2.png" alt="strawberry"></div>
     </div>
@@ -124,15 +114,16 @@
       <div class="insta-logo"><a href="{{instaLink}}"><img src="assets/images/insta-logo.png" alt="instagram"></a></div>
       <div class="insta-logo-text"><a href="{{instaLink}}"> Мы в Instagram</a></div>
     </div>
-    <div class="phone"><a href="tel:{{phoneNumber}}">{{phoneNumber}}</a></div>
+    <div class="phone"><a href="tel:{{phoneNumber}}">{{phoneNumber | phoneFormat}}</a></div>
   </div>
-  <div class="present" *ngIf="showPresent">
-    <div class="present-logo">
-      <img src="assets/images/present.png" alt="present">
+  <div class="cart" *ngIf="showCart">
+    <div class="cart-logo">
+      <img src="assets/images/cart.png" alt="cart">
     </div>
-    <div class="present-text">
-      <p> Оформите заказ <br> и получите подарок!</p>
+    <div class="cart-text">
+      <p> {{cartService.total}} руб.</p>
     </div>
+    <div class="cart-number">{{cartService.count}}</div>
   </div>
 </footer>
 </body>

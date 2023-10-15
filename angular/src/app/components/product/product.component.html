@@ -1,0 +1,13 @@
+<div class="catalog-item">
+  <div class="catalog-item-img"><img src="assets/images/{{product.image}}" alt="Макарун {{i+1}}"></div>
+  <h3>{{product.title}}</h3>
+  <div class="catalog-items-action">
+    <div class="catalog-items-info">
+      <div>1шт.</div>
+      <div>{{ product.price | currency: 'RUB': 'руб.' }}</div>
+    </div>
+    <button class="button" (click)="addProductToCart()">Заказать</button>
+  </div>
+</div>
+
+<!--(click)="addToCart(product, formElement)"-->
